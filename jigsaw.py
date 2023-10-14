@@ -19,7 +19,7 @@ def writeBytes(bin: list, start: int, stop: int):
     return md5
 
 def piece_back():
-    with open("lem.myz", 'rb') as f:
+    with open("lemmy\.z", 'rb') as f:
         contents = f.read().split()
     numFiles = int(contents[0])
     curFile = contents[1].decode()
@@ -59,7 +59,7 @@ def main():
             init = md5
         count += 1
 
-    with open("lem.myz", 'w') as f:
+    with open("lemmy.z", 'w') as f:
         f.write(str(count) + ' ' + init)
 
     piece_back()
