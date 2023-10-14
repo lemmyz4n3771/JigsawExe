@@ -6,7 +6,7 @@ This strategy works best when chained with encryption, so the pieces of the exec
 
 ## Behavior
 Just running the Python program will give this output:
-```
+```bash
 $ python jigsaw.py          
 [*] Usage: jigsaw.py <file> <byte_range>
 ```
@@ -15,3 +15,34 @@ With:
 - `<byte_range>`: is the size of each piece in bytes
 
 The output will be `lemmy.z` and a series of files named after MD5 checksums.
+
+## Example
+Suppose I have the following file (for ease of viewing, this example uses a `.txt` file, but any binary will work, too):
+```bash
+$ cat test.txt                        
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+```
+Running `python jigsaw.py test.txt 30` gives the following:
+```bash
+$ ls
+07ff4023f4295bb826631598ebeaa272  a8a7d9c5e31058f15d25f18d7d65404a  e10a2feca83a99f351c8cfb06d9068d2  lemmy.z
+```
+There is a `piece_back` function in `jigsaw.py` which will give you the original file back:
+```bash
+$ diff ../test.txt original 
+
+$ cat ../test.txt 
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC                                                                                                                                                             
+$ cat original   
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+```
+
+Compiling and running the C# program, pointing to these files will also give you the original back:
+```
+PS C:\Users\lemmy\Desktop\temp> cat .\original
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAABBBBBBBBBBBBBBBBBBBBBBBBBBBBBBCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+```
+For demonstration purposes, I've written the original file to disk. However, it's unnecessary and in fact recommended that original executable be manipulated in memory.
+
+## Disclaimer
+This project is intended for research, demonstrative and educational purposes only. I'm not liable for how you use it.
